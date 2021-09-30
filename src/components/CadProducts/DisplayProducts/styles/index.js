@@ -12,7 +12,8 @@ export const CardItens = styled.div`
   justify-content: center;
 
   p {
-    font-size: 0.5rem;
+    padding: 5px;
+    font-size: 0.8rem;
     background-color: #ddd;
   }
   h2 {
@@ -24,5 +25,15 @@ export const CardItens = styled.div`
     background-color: #ddd;
     text-align: center;
     border-radius: 5px;
+  }
+
+  button {
+    margin-top: 3px;
+    border: none;
+    padding: 5px;
+    border-radius: 5px;
+    background-color: #a63d17;
+    color: #ddd;
+    font-size: 0.8rem;
   }
 `;

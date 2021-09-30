@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const CardCart = styled.div`
   width: 150px;
-  height: 200px;
+  height: 180px;
   background-color: #f2e635;
   border-radius: 5px;
   display: flex;
@@ -15,5 +15,14 @@ export const CardCart = styled.div`
   h4 {
     font-size: 12px;
     text-align: center;
+  }
+  button {
+    margin-top: 3px;
+    border: none;
+    padding: 5px;
+    border-radius: 5px;
+    background-color: #a63d17;
+    color: #ddd;
+    font-size: 1rem;
   }
 `;

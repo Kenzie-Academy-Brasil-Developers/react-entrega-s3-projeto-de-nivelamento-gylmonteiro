@@ -1,10 +1,10 @@
 import { CardCart } from "./styles";
-const Cart = ({ children: { name, price, discount } }) => {
+const Cart = ({ children: { name, price, discount, code }, removeProduct }) => {
   return (
     <CardCart>
       <h4>{name}</h4>
       <p>R${price}</p>
-      <button>Remover</button>
+      <button onClick={() => removeProduct(code)}>Remover</button>
     </CardCart>
   );
 };

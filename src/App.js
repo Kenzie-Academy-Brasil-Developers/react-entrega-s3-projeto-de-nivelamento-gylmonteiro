@@ -6,9 +6,6 @@ import { Container, DisplayTotal, ContainerSection } from "./styles";
 
 function App() {
   //Lista de states
-  const [cart, setCart] = useState([]);
-  const [economy, setEconomy] = useState(0);
-
   const [products, setProducts] = useState([
     {
       code: 10,
@@ -35,6 +32,7 @@ function App() {
       discount: 110.19,
     },
   ]);
+  const [cart, setCart] = useState([]);
 
   //Função para atualizar a lista de produtos que vem do formulário
   const actualyListProducts = (newProduct) => {
@@ -45,9 +43,21 @@ function App() {
     price = Number(price);
     discount = Number(discount);
     setCart([...cart, { name, price, discount, code }]);
-    setEconomy(economy + discount);
   };
 
+  const removeProduct = (code, flagEstoque) => {
+    flagEstoque
+      ? setProducts(
+          products.filter((item) => {
+            return item.code !== code;
+          })
+        )
+      : setCart(
+          cart.filter((item) => {
+            return item.code !== code;
+          })
+        );
+  };
   return (
     <Container>
       <DisplayTotal>
@@ -59,28 +69,54 @@ function App() {
             }, 0)
             .toFixed(2)}
         </h1>
-        <h1>Valor Economizado: R${economy.toFixed(2)}</h1>
+        <h1>
+          Valor Economizado: R$
+          {cart
+            .reduce((acc, currentValue) => {
+              return acc + currentValue.discount;
+            }, 0)
+            .toFixed(2)}
+        </h1>
       </DisplayTotal>
 
-      <h2>Carrinho</h2>
-      <ContainerSection>
-        {cart.map((item, index) => (
-          <Cart key={index}>{item}</Cart>
-        ))}
-      </ContainerSection>
+      {cart.length > 0 ? (
+        <>
+          <h2>Carrinho</h2>
+          <ContainerSection>
+            {cart.map((item, index) => (
+              <Cart key={index} removeProduct={removeProduct}>
+                {item}
+              </Cart>
+            ))}
+          </ContainerSection>
+        </>
+      ) : (
+        <h2>Nenhum item no carrinho</h2>
+      )}
+
       <ContainerSection>
         <FormCad actualyListProducts={actualyListProducts}></FormCad>
       </ContainerSection>
 
-      <h2> Produtos em estoque </h2>
+      {products.length > 0 ? (
+        <>
+          <h2> Produtos em estoque </h2>
 
-      <ContainerSection>
-        {products.map((item, index) => (
-          <DisplayProducts key={index} addProductsForCart={addProductsForCart}>
-            {item}
-          </DisplayProducts>
-        ))}
-      </ContainerSection>
+          <ContainerSection>
+            {products.map((item, index) => (
+              <DisplayProducts
+                key={index}
+                addProductsForCart={addProductsForCart}
+                removeProduct={removeProduct}
+              >
+                {item}
+              </DisplayProducts>
+            ))}
+          </ContainerSection>
+        </>
+      ) : (
+        <h2>Sem produtos no estoque</h2>
+      )}
     </Container>
   );
 }

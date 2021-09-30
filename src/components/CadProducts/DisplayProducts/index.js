@@ -3,7 +3,9 @@ import { CardItens } from "./styles";
 const DisplayProducts = ({
   addProductsForCart,
   children: { name, price, discount, description, code },
+  removeProduct,
 }) => {
+  const flagEstoque = true;
   return (
     <CardItens>
       <h4>{name}</h4>
@@ -11,7 +13,10 @@ const DisplayProducts = ({
       <h2>R$ {price}</h2>
       <h3>Desconto: R$ {discount}</h3>
       <button onClick={() => addProductsForCart(name, price, discount, code)}>
-        Adicionar Produto
+        Adicionar no Cart
+      </button>
+      <button onClick={() => removeProduct(code, flagEstoque)}>
+        Remover do Estoque
       </button>
     </CardItens>
   );
