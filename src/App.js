@@ -2,6 +2,7 @@ import { useState } from "react";
 import Cart from "./components/CadProducts/Cart";
 import DisplayProducts from "./components/CadProducts/DisplayProducts";
 import FormCad from "./components/CadProducts/FormCad/";
+import { Container, DisplayTotal, ContainerSection } from "./styles";
 
 function App() {
   //Lista de states
@@ -41,35 +42,46 @@ function App() {
   };
 
   const addProductsForCart = (name, price, discount, code) => {
+    price = Number(price);
+    discount = Number(discount);
     setCart([...cart, { name, price, discount, code }]);
     setEconomy(economy + discount);
   };
 
-  console.log(cart);
   return (
-    <div>
-      <h1>
-        Valor Total:
-        {cart.reduce((acc, currentValue) => {
-          return acc + currentValue.price;
-        }, 0)}
-      </h1>
-      <h1>Valor Economizado: {economy}</h1>
-      <hr />
-      {cart.map((item, index) => (
-        <Cart key={index}>{item}</Cart>
-      ))}
-      <hr />
+    <Container>
+      <DisplayTotal>
+        <h1>
+          Valor Total: R$
+          {cart
+            .reduce((acc, currentValue) => {
+              return acc + currentValue.price;
+            }, 0)
+            .toFixed(2)}
+        </h1>
+        <h1>Valor Economizado: R${economy.toFixed(2)}</h1>
+      </DisplayTotal>
 
-      <FormCad actualyListProducts={actualyListProducts}></FormCad>
+      <h2>Carrinho</h2>
+      <ContainerSection>
+        {cart.map((item, index) => (
+          <Cart key={index}>{item}</Cart>
+        ))}
+      </ContainerSection>
+      <ContainerSection>
+        <FormCad actualyListProducts={actualyListProducts}></FormCad>
+      </ContainerSection>
 
-      <hr />
-      {products.map((item, index) => (
-        <DisplayProducts key={index} addProductsForCart={addProductsForCart}>
-          {item}
-        </DisplayProducts>
-      ))}
-    </div>
+      <h2> Produtos em estoque </h2>
+
+      <ContainerSection>
+        {products.map((item, index) => (
+          <DisplayProducts key={index} addProductsForCart={addProductsForCart}>
+            {item}
+          </DisplayProducts>
+        ))}
+      </ContainerSection>
+    </Container>
   );
 }
 

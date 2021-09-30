@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-
+import { FormContainer } from "./styles";
 const FormCad = ({ actualyListProducts }) => {
   const { register, handleSubmit } = useForm();
 
@@ -7,7 +7,7 @@ const FormCad = ({ actualyListProducts }) => {
     actualyListProducts(data);
   };
   return (
-    <div>
+    <FormContainer>
       <h3>Cadastro de Produtos</h3>
       <form onSubmit={handleSubmit(onSubmit)}>
         <input placeholder="Código" {...register("code")} />
@@ -17,7 +17,7 @@ const FormCad = ({ actualyListProducts }) => {
         <input placeholder="Desconto" {...register("discount")} />
         <button type="submit">Cadastrar</button>
       </form>
-    </div>
+    </FormContainer>
   );
 };
 
